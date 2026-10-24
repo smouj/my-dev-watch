@@ -78,7 +78,9 @@ object CaptureCodec {
     }
 
     fun parse(text: String): CaptureParse {
-        val lines = text.lines()
+        // Capture files travel between editors and shells: tolerate a leading BOM,
+        // trailing newline or an empty first line instead of rejecting the session.
+        val lines = text.trim().lines()
         if (lines.firstOrNull()?.trim() != VERSION_HEADER) {
             return CaptureParse.Invalid(1, "Missing " + VERSION_HEADER + " header")
         }
@@ -127,7 +129,9 @@ class ReplayTransport(
     override val mtu: Int = 23
 ) : WatchTransport {
 
-    private val sink = MutableSharedFlow<WatchNotification>(extraBufferCapacity = 128)
+    // Replay keeps a short history so a collector that subscribes a moment late
+    // still receives the frame that was just written.
+    private val sink = MutableSharedFlow<WatchNotification>(replay = 16, extraBufferCapacity = 64)
     override val notifications: Flow<WatchNotification> = sink.asSharedFlow()
     private val subscriptions = mutableSetOf<GattChannel>()
 

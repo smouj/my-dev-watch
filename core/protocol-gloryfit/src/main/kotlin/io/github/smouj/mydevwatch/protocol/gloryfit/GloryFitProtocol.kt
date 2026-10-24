@@ -5,6 +5,7 @@ import io.github.smouj.mydevwatch.model.ProtocolId
 import io.github.smouj.mydevwatch.protocol.ProtocolResult
 import io.github.smouj.mydevwatch.protocol.WatchProtocol
 import io.github.smouj.mydevwatch.protocol.WatchTransport
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
@@ -41,7 +42,9 @@ class GloryFitProtocol(
 
     override suspend fun readBattery(): ProtocolResult<Int> = try {
         val answer = coroutineScope {
-            val reply = async {
+            // UNDISPATCHED guarantees the collector is installed before the write,
+            // so a fast answer cannot be lost.
+            val reply = async(start = CoroutineStart.UNDISPATCHED) {
                 withTimeout(timeoutMs) {
                     transport.notifications.first { candidate ->
                         val opcode = candidate.opcode
