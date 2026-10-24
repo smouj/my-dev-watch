@@ -38,7 +38,7 @@ class CliTest {
 
     @Test
     fun identificationExplainsItself() {
-        val (code, output) = run("identify", "--name", "S10", "--expose", "55ff")
+        val (code, output) = run("identify", "--name", "S10", "--expose", "55ff", "--expose", "56ff")
         assertEquals(0, code)
         assertTrue(output.contains("GloryFit"))
         assertTrue(output.contains("Evidence"))

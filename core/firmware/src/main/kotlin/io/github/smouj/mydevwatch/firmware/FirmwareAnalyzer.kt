@@ -25,10 +25,10 @@ object FirmwareAnalyzer {
 
     private val SIGNATURES: List<Pair<ByteArray, String>> = listOf(
         byteArrayOf(0x7F, 0x45, 0x4C, 0x46) to "ELF executable",
-        byteArrayOf(0x1F, 0x8B) to "gzip stream",
-        byteArrayOf(0x78, 0x9C) to "zlib stream (default)",
+        byteArrayOf(0x1F, 0x8B.toByte()) to "gzip stream",
+        byteArrayOf(0x78, 0x9C.toByte()) to "zlib stream (default)",
         byteArrayOf(0x78, 0x01) to "zlib stream (fast)",
-        byteArrayOf(0x78, 0xDA) to "zlib stream (best)",
+        byteArrayOf(0x78, 0xDA.toByte()) to "zlib stream (best)",
         byteArrayOf(0x04, 0x22, 0x4D, 0x18) to "LZ4 frame",
         byteArrayOf(0x50, 0x4B, 0x03, 0x04) to "ZIP archive",
         byteArrayOf(0x27, 0x05, 0x19, 0x56) to "U-Boot uImage"

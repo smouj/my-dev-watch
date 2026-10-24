@@ -68,12 +68,20 @@ The repository contains three things that share one core:
 
 ### On a phone, Android or iPhone
 
-Open the studio in the phone browser and use **Add to Home Screen**. It works
-offline after the first load and needs no account.
+<p align="center">
+  <a href="https://smouj.github.io/my-dev-watch/"><img src="assets/branding/install-qr.svg" alt="Open the studio" width="150"></a>
+</p>
+
+Scan the code, or open <https://smouj.github.io/my-dev-watch/> on the phone and use
+**Add to Home Screen**. The studio works offline after the first load and needs no
+account. It is the same application on iPhone and Android, because the native build
+cannot be installed on iOS without Apple signing.
+
+To keep projects on your own machine instead of the browser, run the local server:
 
 ~~~bash
-cd web && npm install && npm start
-# the page prints a LAN URL and a QR code for your phone
+cd web && npm start
+# prints a LAN URL and shows a QR code for your phone
 ~~~
 
 ### On a PC

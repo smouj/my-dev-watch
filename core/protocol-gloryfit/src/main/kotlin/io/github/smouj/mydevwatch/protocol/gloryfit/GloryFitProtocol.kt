@@ -25,12 +25,9 @@ class GloryFitProtocol(
 
     override val id: ProtocolId = ProtocolId.GLORYFIT
 
-    override val capabilities: Set<Capability> = setOf(
-        Capability.BATTERY,
-        Capability.HEART_RATE,
-        Capability.SPO2,
-        Capability.SLEEP
-    )
+    // Only what this implementation can actually deliver today. The catalogue
+    // documents heart rate, SpO2 and sleep, but catalogued is not implemented.
+    override val capabilities: Set<Capability> = setOf(Capability.BATTERY)
 
     override suspend fun initialize(transport: WatchTransport): ProtocolResult<Unit> = runCatching {
         withTimeout(timeoutMs) {

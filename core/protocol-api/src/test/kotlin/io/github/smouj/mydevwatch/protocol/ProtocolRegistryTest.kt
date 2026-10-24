@@ -53,10 +53,13 @@ class ProtocolRegistryTest {
     }
 
     @Test
-    fun partialEvidenceIsReportedWithItsConfidence() {
-        val result = registry.identify(DeviceFingerprint(name = "Ute Watch"))
-        assertEquals(ProtocolId.GLORYFIT, result.protocol)
-        assertTrue(result.confidence < 1.0)
+    fun partialEvidenceIsScoredButNotPromoted() {
+        val fingerprint = DeviceFingerprint(name = "Ute Watch")
+        val candidates = registry.candidates(fingerprint)
+        val gloryFit = candidates.first { it.protocol == ProtocolId.GLORYFIT }
+        assertTrue(gloryFit.confidence > 0.0)
+        assertTrue(gloryFit.confidence < 0.6)
+        assertEquals(ProtocolId.UNKNOWN, registry.identify(fingerprint).protocol)
     }
 
     @Test

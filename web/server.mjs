@@ -149,6 +149,14 @@ const server = createServer(async (request, response) => {
     }
 });
 
+server.on("error", (error) => {
+    if (error && error.code === "EADDRINUSE") {
+        console.log("A studio server is already listening on port " + PORT + ".");
+        process.exit(0);
+    }
+    throw error;
+});
+
 server.listen(PORT, HOST, () => {
     const urls = lanAddresses().map((address) => "http://" + address + ":" + PORT);
     console.log("My Dev Watch studio");

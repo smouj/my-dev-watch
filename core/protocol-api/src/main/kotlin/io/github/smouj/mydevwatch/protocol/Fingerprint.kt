@@ -140,7 +140,7 @@ class ProtocolRegistry(descriptors: List<ProtocolDescriptor> = defaultDescriptor
                     MatchRule.Exposes("56ff", weight = 2.0, label = "secondary service 56FF"),
                     MatchRule.Advertises("55ff", weight = 1.0, label = "advertises 55FF"),
                     MatchRule.NameMatches(
-                        pattern = Regex("(?i)glory\s?fit|\bute\b"),
+                        pattern = Regex("""(?i)glory\s?fit|\bute\b"""),
                         weight = 1.0,
                         label = "name mentions GloryFit"
                     )
@@ -151,7 +151,7 @@ class ProtocolRegistry(descriptors: List<ProtocolDescriptor> = defaultDescriptor
                 displayName = "GloryFit Pro",
                 rules = listOf(
                     MatchRule.NameMatches(
-                        pattern = Regex("(?i)glory\s?fit\s?pro"),
+                        pattern = Regex("""(?i)glory\s?fit\s?pro"""),
                         weight = 1.0,
                         label = "name mentions GloryFit Pro"
                     )

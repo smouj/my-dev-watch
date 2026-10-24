@@ -1,6 +1,7 @@
 @echo off
 setlocal
-cd /d "%~dp0"
+rem pushd maps a drive when the script is launched from a UNC path.
+pushd "%~dp0"
 
 set "DISTRO=Ubuntu-24.04"
 set "LINUX_DIR=/home/smouj/.openclaw/workspace/main/projects/my-dev-watch/web"
