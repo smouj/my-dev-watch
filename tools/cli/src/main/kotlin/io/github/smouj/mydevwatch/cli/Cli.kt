@@ -4,7 +4,7 @@ import io.github.smouj.mydevwatch.capture.CaptureCodec
 import io.github.smouj.mydevwatch.capture.CaptureParse
 import io.github.smouj.mydevwatch.capture.HexFormat
 import io.github.smouj.mydevwatch.firmware.FirmwareAnalyzer
-import io.github.smouj.mydevwatch.model.DeviceFingerprint
+import io.github.smouj.mydevwatch.protocol.DeviceFingerprint
 import io.github.smouj.mydevwatch.model.SupportLevel
 import io.github.smouj.mydevwatch.protocol.ProtocolRegistry
 import io.github.smouj.mydevwatch.protocol.gloryfit.GloryFitBattery

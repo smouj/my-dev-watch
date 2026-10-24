@@ -10,6 +10,8 @@
 
   <p>An open, local-first companion, watch-face studio and BLE laboratory for<br>
   GloryFit-family smartwatches. No account, no ads, no telemetry.</p>
+
+  <p><strong>English</strong> · <a href="README.es.md">Español</a></p>
 </div>
 
 <p align="center">

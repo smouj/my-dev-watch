@@ -63,8 +63,7 @@ class CaptureCodecTest {
     fun hexAcceptsSeveralHumanNotations() {
         assertEquals("A2 56", HexFormat.encode(HexFormat.decode("a2:56")))
         assertEquals("A2 56", HexFormat.encode(HexFormat.decode("0xA2 0x56")))
-        assertEquals("A2 56", HexFormat.encode(HexFormat.decode("A2
-56")))
+        assertEquals("A2 56", HexFormat.encode(HexFormat.decode(listOf("A2", "56").joinToString("\n"))))
         assertTrue(runCatching { HexFormat.decode("A2 5") }.isFailure)
         assertTrue(runCatching { HexFormat.decode("ZZ") }.isFailure)
     }

@@ -9,4 +9,5 @@ kotlin {
 dependencies {
     api(project(":core:protocol-api"))
     testImplementation(libs.kotlin.test)
+    testImplementation(project(":core:capture"))
 }
