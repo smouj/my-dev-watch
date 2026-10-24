@@ -53,12 +53,10 @@ class CaptureCodecTest {
 
     @Test
     fun rejectsBadHexAndBadDirection() {
-        assertIs<CaptureParse.Invalid>(CaptureCodec.parse("MDCAP/1
---
-0 TX 33f1 A2 5"))
-        assertIs<CaptureParse.Invalid>(CaptureCodec.parse("MDCAP/1
---
-0 XX 33f1 A2"))
+        val withOddHex = listOf("MDCAP/1", "--", "0 TX 33f1 A2 5").joinToString("\n")
+        val withBadDirection = listOf("MDCAP/1", "--", "0 XX 33f1 A2").joinToString("\n")
+        assertIs<CaptureParse.Invalid>(CaptureCodec.parse(withOddHex))
+        assertIs<CaptureParse.Invalid>(CaptureCodec.parse(withBadDirection))
     }
 
     @Test

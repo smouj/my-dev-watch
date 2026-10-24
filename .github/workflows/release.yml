@@ -20,8 +20,11 @@ jobs:
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: Build distributions
+      - name: Build CLI distributions
         run: ./gradlew :tools:cli:distZip :tools:cli:distTar -PwithAndroid=false --console=plain
+
+      - name: Build Android APK
+        run: ./gradlew :android:app:assembleDebug -PwithAndroid=true --console=plain
 
       - name: Name artefacts
         run: |
@@ -29,6 +32,7 @@ jobs:
           mkdir -p dist
           cp tools/cli/build/distributions/cli-$VERSION.zip "dist/my-dev-watch-$VERSION.zip"
           cp tools/cli/build/distributions/cli-$VERSION.tar "dist/my-dev-watch-$VERSION.tar"
+          cp android/app/build/outputs/apk/debug/app-debug.apk "dist/my-dev-watch-$VERSION-debug.apk"
           cd dist
           sha256sum * > SHA256SUMS.txt
           cat SHA256SUMS.txt

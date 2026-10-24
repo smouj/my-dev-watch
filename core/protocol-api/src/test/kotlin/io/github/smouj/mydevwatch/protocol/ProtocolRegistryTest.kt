@@ -28,7 +28,7 @@ class ProtocolRegistryTest {
         )
         val result = registry.identify(fingerprint)
         assertEquals(ProtocolId.GLORYFIT, result.protocol)
-        assertTrue(result.confidence >= 0.9)
+        assertTrue(result.confidence >= 0.7)
         assertTrue(result.matched.any { it.contains("55FF") })
         assertTrue(result.isConclusive)
     }

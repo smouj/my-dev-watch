@@ -1,0 +1,8 @@
+MDCAP/1
+device: S10 (synthetic fixture, no address)
+protocol: gloryfit
+created: 2026-10-24T09:00:00Z
+note: battery request and answer from the documented capture
+--
+0 TX 33f1 A2
+140 RX 33f2 A2 56

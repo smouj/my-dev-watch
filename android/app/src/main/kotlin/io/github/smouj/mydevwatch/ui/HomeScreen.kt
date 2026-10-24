@@ -36,6 +36,7 @@ import io.github.smouj.mydevwatch.model.SupportStatus
 import io.github.smouj.mydevwatch.protocol.ConnectionState
 import io.github.smouj.mydevwatch.protocol.DeviceFingerprint
 import io.github.smouj.mydevwatch.protocol.ProtocolRegistry
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -179,8 +180,9 @@ fun HomeScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     val last = state.lastSync
+                    val clock = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneId.systemDefault())
                     Text(
-                        if (last == null) "Never synced" else "Last sync " + last.format(DateTimeFormatter.ofPattern("HH:mm")),
+                        if (last == null) "Never synced" else "Last sync " + clock.format(last),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 6.dp)
