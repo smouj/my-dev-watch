@@ -107,7 +107,7 @@ object CaptureCodec {
                 }
                 return@forEachIndexed
             }
-            val parts = line.split(Regex("\\s+"))
+            val parts = line.split(' ', '\t').filter { it.isNotEmpty() }
             if (parts.size != 4) return CaptureParse.Invalid(lineNumber, "Expected: offset direction characteristic payload")
             val offset = parts[0].toLongOrNull()
                 ?: return CaptureParse.Invalid(lineNumber, "Invalid offset")
