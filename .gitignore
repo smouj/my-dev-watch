@@ -1,0 +1,31 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+local.properties
+*.hprof
+
+# Android
+*.apk
+*.aab
+*.keystore
+!debug.keystore
+captures/
+.externalNativeBuild/
+.cxx/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.fleet/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project outputs
+/.openclaw/tmp/
+/dist/
+*.log
+web/projects/*.json

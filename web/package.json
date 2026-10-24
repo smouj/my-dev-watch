@@ -1,0 +1,14 @@
+{
+  "name": "my-dev-watch-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local watch-face studio, PWA and LAN installer for My Dev Watch.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check app.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

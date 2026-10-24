@@ -1,0 +1,49 @@
+name: Device report
+description: Report what works and what does not on a physical watch.
+labels: ["device", "needs-evidence"]
+body:
+  - type: input
+    id: model
+    attributes:
+      label: Retail model
+      placeholder: S10 / Watch-CA41 / ...
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Firmware version
+      description: From the watch menu or the vendor app. Required.
+    validations:
+      required: true
+  - type: input
+    id: phone
+    attributes:
+      label: Phone and Android version
+    validations:
+      required: true
+  - type: checkboxes
+    id: works
+    attributes:
+      label: What works
+      options:
+        - label: Battery
+        - label: Clock sync
+        - label: Steps
+        - label: Heart rate
+        - label: SpO2
+        - label: Sleep
+        - label: Notifications
+        - label: Watch faces
+  - type: textarea
+    id: capture
+    attributes:
+      label: Capture or GATT map
+      description: A .mdcap file, or the services and characteristics you observed, with addresses removed.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety
+      options:
+        - label: I did not flash or modify firmware during this test
+          required: true

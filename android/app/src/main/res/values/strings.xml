@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Dev Watch</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_health">Health</string>
+    <string name="tab_activity">Activity</string>
+    <string name="tab_watch">Watch</string>
+    <string name="tab_create">Create</string>
+    <string name="settings">Settings</string>
+    <string name="preview_banner">Preview data — not read from your watch</string>
+</resources>

@@ -1,0 +1,45 @@
+name: Bug report
+description: Something behaves incorrectly in the app, CLI or docs.
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not paste raw captures without removing device addresses.
+        Do not report a firmware problem here if it is a safety issue — use a private security advisory.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: 0.1.0 / main@abc1234
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - Android app
+        - CLI
+        - Web studio
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: Include the exact error, not a summary of it.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Pixel 7, Android 15, S10 watch, firmware 1.2.3

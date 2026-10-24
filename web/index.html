@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0C1014">
+  <meta name="description" content="My Dev Watch studio: design watch faces, inspect a GloryFit-family watch, install on any phone.">
+  <title>My Dev Watch · Studio</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="My Dev Watch">
+      <img src="assets/logo-white.png" alt="" class="brand-logo">
+      <span class="brand-text">
+        <strong>My Dev Watch</strong>
+        <small>Studio</small>
+      </span>
+    </a>
+
+    <nav class="tabs" aria-label="Sections">
+      <button class="tab is-active" data-view="studio" type="button">Studio</button>
+      <button class="tab" data-view="device" type="button">Watch</button>
+      <button class="tab" data-view="install" type="button">Install</button>
+    </nav>
+
+    <button class="icon-button" id="theme-toggle" type="button" title="Toggle theme" aria-label="Toggle theme">◐</button>
+  </header>
+
+  <main>
+    <section class="view is-active" id="view-studio">
+      <aside class="panel panel-layers">
+        <h2>Layers</h2>
+        <ul id="layer-list" class="layer-list"></ul>
+        <div class="add-grid">
+          <button type="button" data-add="time">Time</button>
+          <button type="button" data-add="date">Date</button>
+          <button type="button" data-add="steps">Steps</button>
+          <button type="button" data-add="battery">Battery</button>
+          <button type="button" data-add="text">Text</button>
+          <button type="button" data-add="shape">Shape</button>
+        </div>
+        <p class="hint">Drag on the canvas to move the selected layer. Delete removes it.</p>
+      </aside>
+
+      <div class="canvas-area">
+        <div class="canvas-head">
+          <input id="project-name" class="project-name" value="My first face" aria-label="Project name" spellcheck="false">
+          <div class="canvas-actions">
+            <button type="button" id="btn-save">Save</button>
+            <button type="button" id="btn-export">Export</button>
+            <label class="file-button">
+              Import
+              <input type="file" id="file-import" accept=".mdwface,.json,application/json" hidden>
+            </label>
+          </div>
+        </div>
+
+        <div class="canvas-stage">
+          <canvas id="face" width="480" height="480" aria-label="Watch face editor"></canvas>
+        </div>
+
+        <div class="sim-row">
+          <label>Time <input id="sim-time" type="time" value="08:24"></label>
+          <label>Steps <input id="sim-steps" type="number" value="8421" min="0" max="99999"></label>
+          <label>Battery <input id="sim-battery" type="number" value="86" min="0" max="100"></label>
+          <label>Heart <input id="sim-heart" type="number" value="71" min="0" max="220"></label>
+        </div>
+      </div>
+
+      <aside class="panel panel-props">
+        <h2>Properties</h2>
+        <div id="props-empty" class="empty">Select a layer to edit it.</div>
+        <div id="props-form" class="props-form" hidden>
+          <label>Text <input id="prop-text" type="text" maxlength="40"></label>
+          <label>Size <input id="prop-size" type="range" min="14" max="140" step="1"></label>
+          <label>X <input id="prop-x" type="range" min="-50" max="530" step="1"></label>
+          <label>Y <input id="prop-y" type="range" min="-50" max="530" step="1"></label>
+          <label>Weight
+            <select id="prop-weight">
+              <option value="400">Regular</option>
+              <option value="600">Semibold</option>
+              <option value="800">Bold</option>
+            </select>
+          </label>
+          <label>Colour <input id="prop-color" type="color"></label>
+          <div class="props-actions">
+            <button type="button" id="btn-duplicate">Duplicate</button>
+            <button type="button" id="btn-delete" class="danger">Delete</button>
+          </div>
+        </div>
+
+        <h2>Project</h2>
+        <label>Width <input id="prop-width" type="number" min="120" max="480" step="1"></label>
+        <label>Height <input id="prop-height" type="number" min="120" max="480" step="1"></label>
+        <label>Shape
+          <select id="prop-shape">
+            <option value="circle">Circular</option>
+            <option value="square">Square</option>
+            <option value="rounded">Rounded</option>
+          </select>
+        </label>
+        <p class="hint" id="save-status">Not saved yet.</p>
+      </aside>
+    </section>
+
+    <section class="view" id="view-device">
+      <div class="panel wide">
+        <h2>Watch</h2>
+        <p class="lede">The studio can talk to a watch from Chrome or Edge on this PC, or from Android Chrome. iPhone browsers cannot do Web Bluetooth, so on iOS this tab is read-only.</p>
+
+        <div class="device-grid">
+          <div>
+            <button type="button" id="btn-connect" class="primary">Connect a watch</button>
+            <dl class="facts">
+              <dt>Status</dt><dd id="ble-status">Not connected</dd>
+              <dt>Device</dt><dd id="ble-name">—</dd>
+              <dt>Battery</dt><dd id="ble-battery">—</dd>
+            </dl>
+            <p class="hint">Only the documented battery command (0xA2) is sent. Nothing is written to firmware.</p>
+          </div>
+          <div>
+            <h3>GATT</h3>
+            <ul id="ble-services" class="mono-list"><li>Connect to list services.</li></ul>
+            <h3>Console</h3>
+            <pre id="ble-log" class="console"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-install">
+      <div class="panel wide center">
+        <h2>Install on your phone</h2>
+        <p class="lede">Works on Android and iPhone: open this page on the phone, then add it to the home screen. Nothing is uploaded; the app runs from this PC.</p>
+
+        <div class="qr-card">
+          <div id="qr-box" class="qr-box">Generating…</div>
+          <div class="qr-meta">
+            <p class="url" id="install-url">—</p>
+            <button type="button" id="btn-copy" class="primary">Copy link</button>
+            <ol class="steps">
+              <li>Both devices on the same Wi-Fi.</li>
+              <li>Scan the code, or open the link.</li>
+              <li>Android Chrome: menu → <em>Install app</em>.</li>
+              <li>iPhone Safari: share → <em>Add to Home Screen</em>.</li>
+            </ol>
+            <p class="hint" id="install-note"></p>
+          </div>
+        </div>
+
+        <h3>Native Android build</h3>
+        <p class="muted">The Kotlin APK is produced by CI and attached to every release. It is the same app, with real background sync. iPhones cannot install an APK: Apple requires a signed App Store or TestFlight build.</p>
+        <a class="primary link" href="https://github.com/smouj/my-dev-watch/releases" target="_blank" rel="noreferrer">Open releases</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Apache-2.0 · local-first · no telemetry</span>
+    <span id="storage-state"></span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

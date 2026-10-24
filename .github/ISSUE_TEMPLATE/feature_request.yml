@@ -1,0 +1,34 @@
+name: Feature request
+description: Propose a capability, protocol or interface improvement.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What can you not do today, with which model and firmware?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Companion
+        - Studio (watch faces)
+        - Laboratory (BLE and firmware)
+        - Web studio
+        - Documentation
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Project constraints
+      options:
+        - label: This does not require an account, cloud or telemetry
+          required: true
+        - label: This does not require an unverified firmware write
+          required: true
