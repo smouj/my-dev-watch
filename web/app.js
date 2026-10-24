@@ -414,18 +414,27 @@ async function refreshInstall() {
         const info = await response.json();
         const url = (info.urls && info.urls[0]) || info.local;
         urlNode.textContent = url;
-        box.innerHTML = "";
-        const image = document.createElement("img");
-        image.alt = "QR code for " + url;
-        image.src = "/api/qr?data=" + encodeURIComponent(url);
-        box.appendChild(image);
+        renderQr(url);
         $("#install-note").textContent = info.urls && info.urls.length
             ? "Keep this PC awake while the phone is connected."
             : "No LAN address detected. Use a hotspot or check the firewall.";
     } catch (error) {
-        urlNode.textContent = "Local server not detected";
-        box.textContent = "Open this page through npm start";
-        $("#install-note").textContent = "The QR code needs the small local server, not a file:// page.";
+        const fallback = window.location.href.split("#")[0];
+        urlNode.textContent = fallback;
+        renderQr(fallback);
+        $("#install-note").textContent = "Hosted page detected: this QR opens the public studio. Run the local server to get a LAN address instead.";
+    }
+}
+
+function renderQr(url) {
+    const box = $("#qr-box");
+    try {
+        const qr = qrcode(0, "M");
+        qr.addData(url);
+        qr.make();
+        box.innerHTML = qr.createSvgTag({ cellSize: 6, margin: 4 });
+    } catch {
+        box.textContent = url;
     }
 }
 

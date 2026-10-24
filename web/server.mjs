@@ -12,7 +12,6 @@ import { existsSync } from "node:fs";
 import { extname, join, resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { networkInterfaces } from "node:os";
-import { execFile } from "node:child_process";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const PROJECTS = join(ROOT, "projects");
@@ -42,17 +41,6 @@ function lanAddresses() {
     return result;
 }
 
-function qrSvg(data) {
-    return new Promise((resolvePromise, reject) => {
-        const code = "import sys, segno; q=segno.make(sys.argv[1], error='m'); " +
-            "sys.stdout.write(q.svg_inline(scale=5, border=2, dark='#0C1014', light='#ffffff'))";
-        execFile("python3", ["-c", code, data], (error, stdout, stderr) => {
-            if (error) reject(new Error(stderr || error.message));
-            else resolvePromise(stdout);
-        });
-    });
-}
-
 async function readBody(request, limit = 2 * 1024 * 1024) {
     const chunks = [];
     let size = 0;
@@ -77,24 +65,6 @@ async function handleApi(request, response, url) {
         const urls = lanAddresses().map((address) => "http://" + address + ":" + PORT);
         response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
         response.end(JSON.stringify({ port: PORT, urls, local: "http://127.0.0.1:" + PORT }));
-        return true;
-    }
-
-    if (url.pathname === "/api/qr") {
-        const data = url.searchParams.get("data") || "";
-        if (!data) {
-            response.writeHead(400, { "content-type": "application/json" });
-            response.end(JSON.stringify({ error: "Missing data" }));
-            return true;
-        }
-        try {
-            const svg = await qrSvg(data);
-            response.writeHead(200, { "content-type": "image/svg+xml", "cache-control": "no-store" });
-            response.end(svg);
-        } catch (error) {
-            response.writeHead(501, { "content-type": "application/json" });
-            response.end(JSON.stringify({ error: error.message, hint: "Install segno: python3 -m pip install segno" }));
-        }
         return true;
     }
 
