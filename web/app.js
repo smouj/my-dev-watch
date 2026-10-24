@@ -316,7 +316,44 @@ function setProject(project) {
     draw();
 }
 
+async function refreshProjectList() {
+    const select = $("#open-project");
+    try {
+        const response = await fetch("/api/projects");
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const payload = await response.json();
+        const current = select.value;
+        select.innerHTML = '<option value="">Open…</option>';
+        (payload.projects || []).forEach((project) => {
+            const option = document.createElement("option");
+            option.value = project.id;
+            option.textContent = project.name || project.id;
+            select.appendChild(option);
+        });
+        select.value = current;
+    } catch {
+        select.innerHTML = '<option value="">Local only</option>';
+    }
+}
+
+async function loadProject(id) {
+    if (!id) return;
+    try {
+        const response = await fetch("/api/projects/" + encodeURIComponent(id));
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const project = await response.json();
+        setProject(project);
+        $("#project-name").value = project.name || id;
+        persistLocal();
+        $("#save-status").textContent = "Opened " + id + ".json from the PC.";
+    } catch (error) {
+        $("#save-status").textContent = "Could not open " + id + ": " + error.message;
+    }
+}
+
 function bindProjectActions() {
+    $("#open-project").addEventListener("change", (event) => loadProject(event.target.value));
+
     $("#project-name").addEventListener("input", (event) => {
         state.project.name = event.target.value;
         persistLocal();
@@ -334,6 +371,7 @@ function bindProjectActions() {
             if (!response.ok) throw new Error("HTTP " + response.status);
             const payload = await response.json();
             status.textContent = "Saved on the PC as " + payload.saved + ".json";
+            refreshProjectList();
         } catch (error) {
             status.textContent = "Saved in this browser only (" + error.message + "). Export to keep a copy.";
         }
@@ -548,6 +586,7 @@ function boot() {
     setProject(state.project);
     persistLocal();
     draw();
+    refreshProjectList();
 
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js").catch(() => {});

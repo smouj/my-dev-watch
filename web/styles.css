@@ -261,3 +261,14 @@ button:disabled { opacity: .45; cursor: not-allowed; }
   .topbar { padding: 8px 12px; gap: 8px; }
   canvas#face { border-radius: 18px; }
 }
+
+.open-project {
+  background: var(--surface-high);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 9px;
+  padding: 7px 8px;
+  font: inherit;
+  font-size: .82rem;
+  max-width: 130px;
+}
