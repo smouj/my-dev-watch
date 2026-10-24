@@ -24,7 +24,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Build and test every JVM module
         run: ./gradlew build -PwithAndroid=false --console=plain --stacktrace
       - name: Verify the CLI runs
@@ -42,7 +42,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Assemble debug APK
         run: ./gradlew :android:app:assembleDebug -PwithAndroid=true --console=plain --stacktrace
       - name: Report APK
