@@ -6,6 +6,11 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # Major upgrades change the build model (Gradle 9, AGP 9, Kotlin majors) and
+      # are handled as reviewed migrations, never as an automatic bump.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
       kotlin:
         patterns:
@@ -18,3 +23,6 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

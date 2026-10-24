@@ -25,13 +25,13 @@ class ReplayBatteryTest {
     @Test
     fun aRecordedSessionDrivesTheRealProtocolStack() = runBlocking {
         val parsed = CaptureCodec.parse(session)
-        assertIs<CaptureParse.Success>(parsed)
+        assertIs<CaptureParse.Success>(parsed, "parse returned " + parsed)
         val transport = ReplayTransport(parsed.file.packets)
         val protocol = GloryFitProtocol(transport)
 
         assertIs<ProtocolResult.Success<Unit>>(protocol.initialize(transport))
         val battery = protocol.readBattery()
-        assertIs<ProtocolResult.Success<Int>>(battery)
+        assertIs<ProtocolResult.Success<Int>>(battery, "battery returned " + battery)
         assertEquals(86, battery.value)
     }
 }

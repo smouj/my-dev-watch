@@ -23,7 +23,7 @@ class CaptureCodecTest {
     @Test
     fun parsesAManifestAndItsPackets() {
         val parsed = CaptureCodec.parse(sample)
-        assertIs<CaptureParse.Success>(parsed)
+        assertIs<CaptureParse.Success>(parsed, "parse returned " + parsed)
         val file = parsed.file
         assertEquals("S10", file.manifest.device)
         assertEquals(ProtocolId.GLORYFIT, file.manifest.protocol)
@@ -35,7 +35,7 @@ class CaptureCodecTest {
     @Test
     fun encodingIsStableAndRoundTrips() {
         val parsed = CaptureCodec.parse(sample)
-        assertIs<CaptureParse.Success>(parsed)
+        assertIs<CaptureParse.Success>(parsed, "parse returned " + parsed)
         val encoded = CaptureCodec.encode(parsed.file)
         val again = CaptureCodec.parse(encoded)
         assertIs<CaptureParse.Success>(again)
