@@ -108,12 +108,15 @@ object CaptureCodec {
                 return@forEachIndexed
             }
             val parts = line.split(' ', '\t').filter { it.isNotEmpty() }
-            if (parts.size != 4) return CaptureParse.Invalid(lineNumber, "Expected: offset direction characteristic payload")
+            // The payload is every byte after the characteristic: a battery answer is
+            // "A2 56", not a single field. Requiring exactly four tokens silently
+            // rejected every multi-byte frame.
+            if (parts.size < 4) return CaptureParse.Invalid(lineNumber, "Expected: offset direction characteristic payload")
             val offset = parts[0].toLongOrNull()
                 ?: return CaptureParse.Invalid(lineNumber, "Invalid offset")
             val direction = CapturePacket.Direction.entries.firstOrNull { it.name == parts[1].uppercase() }
                 ?: return CaptureParse.Invalid(lineNumber, "Invalid direction")
-            val payload = runCatching { HexFormat.decode(parts[3]) }
+            val payload = runCatching { HexFormat.decode(parts.drop(3).joinToString(" ")) }
                 .getOrElse { return CaptureParse.Invalid(lineNumber, "Invalid hex payload") }
             if (payload.isEmpty()) return CaptureParse.Invalid(lineNumber, "Empty payload")
             packets += CapturePacket(offset, direction, parts[2].lowercase(), payload)
