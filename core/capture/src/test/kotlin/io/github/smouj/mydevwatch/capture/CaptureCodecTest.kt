@@ -29,7 +29,8 @@ class CaptureCodecTest {
         assertEquals(ProtocolId.GLORYFIT, file.manifest.protocol)
         assertEquals(2, file.packets.size)
         assertContentEquals(byteArrayOf(0xA2.toByte(), 0x56), file.packets[1].payload)
-        assertEquals(86, file.packets[1].opcode)
+        assertEquals(0xA2, file.packets[1].opcode)
+        assertEquals(86, file.packets[1].payload[1].toInt() and 0xFF)
     }
 
     @Test
