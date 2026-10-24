@@ -46,7 +46,8 @@ The repository contains three things that share one core:
 ## Project status
 
 > **Milestone 0 complete, milestone 1 in progress.** The core, the CLI, the codecs
-> and the web studio are built and tested. The Android app compiles in CI and is an
+> and the web studio are built and tested (40 unit tests, green CI, APK assembled on
+> every push). The Android app compiles in CI and is an
 > alpha shell: it has not yet been run against a physical watch, and no device is
 > listed as verified. There is no firmware flashing code, by design.
 
