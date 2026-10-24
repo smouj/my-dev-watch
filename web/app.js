@@ -450,17 +450,20 @@ async function refreshInstall() {
         const response = await fetch("/api/info");
         if (!response.ok) throw new Error("HTTP " + response.status);
         const info = await response.json();
-        const url = (info.urls && info.urls[0]) || info.local;
-        urlNode.textContent = url;
-        renderQr(url);
-        $("#install-note").textContent = info.urls && info.urls.length
-            ? "Keep this PC awake while the phone is connected."
-            : "No LAN address detected. Use a hotspot or check the firewall.";
+        const lan = (info.urls && info.urls[0]) || info.local;
+        const onPhone = window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1";
+        const qrTarget = onPhone ? window.location.origin + window.location.pathname : HOSTED_STUDIO;
+        urlNode.textContent = qrTarget;
+        renderQr(qrTarget);
+        $("#install-note").textContent = onPhone
+            ? "This phone already has the studio open. Add it to the home screen."
+            : "The QR opens the hosted studio. On the same Wi-Fi you can also use " + lan + ".";
     } catch (error) {
         const fallback = window.location.href.split("#")[0];
-        urlNode.textContent = fallback;
-        renderQr(fallback);
-        $("#install-note").textContent = "Hosted page detected: this QR opens the public studio. Run the local server to get a LAN address instead.";
+        const qrTarget = fallback.startsWith("http") ? fallback : HOSTED_STUDIO;
+        urlNode.textContent = qrTarget;
+        renderQr(qrTarget);
+        $("#install-note").textContent = "Local server not detected; the QR points at the hosted studio.";
     }
 }
 

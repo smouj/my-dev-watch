@@ -11,8 +11,9 @@ cd web
 npm start          # no npm install needed: zero dependencies
 ~~~
 
-Open <http://127.0.0.1:5173>. The Install tab shows a QR code for the LAN address so
-a phone on the same Wi-Fi can open the same studio and add it to the home screen.
+Open <http://127.0.0.1:5173>. The Install tab shows a QR code for the hosted studio,
+so any phone (Android or iPhone) can install it without depending on this PC being
+reachable; the LAN address is listed as well for same-network use.
 
 ## What it does
 
